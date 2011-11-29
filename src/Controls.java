@@ -66,6 +66,10 @@ public class Controls extends JPanel implements ActionListener
             myPlayer = new MyPlayer(filepath);
             myThread = new Thread(myPlayer);
             myThread.start();
+            while (!myPlayer.finished())
+            {
+                position.setText(myPlayer.getPosition());
+            }
         }
         if (e.getSource() == stopButton) 
         {

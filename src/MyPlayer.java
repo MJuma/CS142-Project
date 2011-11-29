@@ -16,6 +16,9 @@ public class MyPlayer implements Runnable
 
     private Player player;
     private InputStream is;
+    
+    int position;
+    boolean stat = false;
 
     /**
      * Instantiates a new my player.
@@ -55,32 +58,94 @@ public class MyPlayer implements Runnable
     /**
      * Play the file.
      */
-    private void play() 
+//    private void play() 
+//    {
+//        try 
+//        {
+//            player = new Player(is);
+//            player.play();
+//
+//            while (!player.isComplete()) 
+//            {
+//                int position = player.getPosition();
+//                System.out.println("Position: " + position);
+//                try 
+//                {
+//                    Thread.sleep(1000);
+//                } catch (Exception ee) 
+//                {
+//                    ee.printStackTrace();
+//                }
+//            }
+//        } catch (JavaLayerException e)
+//        {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//    }
+    
+    public String getPosition()
     {
-        try 
-        {
+        String retVal = "" + (position / 1000);
+        return retVal;
+    }
+    
+    public boolean finished()
+    {
+        //return player.isComplete();
+        return stat;
+    }
+    
+    public void play() {
+        try {
             player = new Player(is);
-            player.play();
+            PlayerThread pt = new PlayerThread();
+            pt.start();
 
             while (!player.isComplete()) 
             {
-                int position = player.getPosition();
-                System.out.println("Position: " + position);
-                try 
-                {
+                stat = false;
+                position = player.getPosition();
+                //System.out.println("Position: " + position);
+                try {
                     Thread.sleep(1000);
-                } catch (Exception ee) 
-                {
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
             }
-        } catch (JavaLayerException e)
-        {
-            // TODO Auto-generated catch block
+            stat = false;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+    
+    class PlayerThread extends Thread {
+
+        /* (non-Javadoc)
+         * 
+         * @see java.lang.Thread#run() */
+        @Override
+        public void run() {
+            try {
+                player.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+//    private int position()
+//    {
+//        int position = 0;
+//        
+//        try
+//        {
+//            player =
+//        }
+//        
+//        return position;
+//    }
 
     @Override
     public void run() 
