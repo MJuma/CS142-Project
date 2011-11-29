@@ -176,8 +176,8 @@ public class ToolBar extends JFrame
 	public static void main(String[] args) 
 
 	{
-		ToolBar mba = new ToolBar();
-		mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mba.setVisible(true);
+//		ToolBar mba = new ToolBar();
+//		mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		mba.setVisible(true);
 	}
 }

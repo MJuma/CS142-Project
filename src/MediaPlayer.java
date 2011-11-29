@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 
 public class MediaPlayer 
 {
@@ -7,8 +9,14 @@ public class MediaPlayer
      */
     public static void main(String[] args) 
     {        
-        Gui start = new Gui();
-        //System.out.println("test");
+      Controls begin = new Controls();
+      
+
+      ToolBar mba = new ToolBar();
+      mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      mba.setVisible(true);
+      
+
     }
 
 }
