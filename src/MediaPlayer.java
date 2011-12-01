@@ -10,8 +10,6 @@ public class MediaPlayer
     public static void main(String[] args) 
     {        
       Controls begin = new Controls();
-      
-      
 
       //ToolBar mba = new ToolBar();
       //mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

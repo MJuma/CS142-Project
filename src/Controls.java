@@ -13,13 +13,13 @@ import javax.swing.JPanel;
 public class Controls extends JPanel implements ActionListener 
 {
     private JFrame frame;
-    private JButton selectFile, playButton, stopButton;
+    private JButton selectFile, playButton, stopButton, time;
     private JLabel position;
     private MyPlayer myPlayer;
     private Thread myThread;
     
     File filepath;
-    String file;
+    String fileString;
 
     public Controls() 
     {
@@ -50,6 +50,10 @@ public class Controls extends JPanel implements ActionListener
         stopButton.addActionListener(this);
         add(stopButton);
         
+        time = new JButton("Time");
+        time.addActionListener(this);
+        add(time);
+        
         position = new JLabel("");
         add(position);
     }
@@ -63,26 +67,49 @@ public class Controls extends JPanel implements ActionListener
             int returnVal = chooser.showOpenDialog(null);
             filepath = chooser.getSelectedFile();   
             try {
-                file = filepath.getCanonicalPath();
+                fileString = filepath.getCanonicalPath();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
         if (e.getSource() == playButton) 
         {
-//            myPlayer = new MyPlayer(filepath);
-//            myThread = new Thread(myPlayer);
-//            myThread.start();
-//            position.setText(myPlayer.getPosition());
-            JLayerPlayer t = new JLayerPlayer(file);
+            Mp3Player a = new Mp3Player(filepath);
+            myThread = new Thread(a);
+            myThread.start();
+//            while (Mp3Player.getPosition() < 122000)
+//            {
+//                String elapsed;
+//                elapsed = "" + Mp3Player.getPosition();
+//                position.setText(elapsed);
+//            }
         }
         if (e.getSource() == stopButton) 
         {
-//            if (myThread.isAlive())
-//            {
-//                myThread.stop();
-//            }
+            if (myThread.isAlive())
+            {
+                myThread.stop();
+            }
         }
+        if (e.getSource() == time) 
+        {
+            //if (myThread.isAlive())
+            while (Mp3Player.getPosition() < 122000)
+            {
+                String elapsed;
+                elapsed = "" + Mp3Player.getPosition();
+                
+                position.setText(elapsed);
+            }
+        }
+    }
+    
+    public void time(int are)
+    {
+        String elapsed;
+        elapsed = "" + are;
+        
+        position.setText(elapsed);
     }
 
     public static void main(String[] args) 
