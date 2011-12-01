@@ -2,6 +2,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,6 +19,7 @@ public class Controls extends JPanel implements ActionListener
     private Thread myThread;
     
     File filepath;
+    String file;
 
     public Controls() 
     {
@@ -59,24 +61,27 @@ public class Controls extends JPanel implements ActionListener
         {
             JFileChooser chooser = new JFileChooser();
             int returnVal = chooser.showOpenDialog(null);
-            filepath = chooser.getSelectedFile();
+            filepath = chooser.getSelectedFile();   
+            try {
+                file = filepath.getCanonicalPath();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         if (e.getSource() == playButton) 
         {
-            myPlayer = new MyPlayer(filepath);
-            myThread = new Thread(myPlayer);
-            myThread.start();
-            while (!myPlayer.finished())
-            {
-                position.setText(myPlayer.getPosition());
-            }
+//            myPlayer = new MyPlayer(filepath);
+//            myThread = new Thread(myPlayer);
+//            myThread.start();
+//            position.setText(myPlayer.getPosition());
+            JLayerPlayer t = new JLayerPlayer(file);
         }
         if (e.getSource() == stopButton) 
         {
-            if (myThread.isAlive())
-            {
-                myThread.stop();
-            }
+//            if (myThread.isAlive())
+//            {
+//                myThread.stop();
+//            }
         }
     }
 

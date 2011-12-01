@@ -90,12 +90,12 @@ public class MyPlayer implements Runnable
         String retVal = "" + (position / 1000);
         return retVal;
     }
-    
-    public boolean finished()
-    {
-        //return player.isComplete();
-        return stat;
-    }
+//    
+//    public boolean finished()
+//    {
+//        //return player.isComplete();
+//        return stat;
+//    }
     
     public void play() {
         try {
@@ -120,6 +120,10 @@ public class MyPlayer implements Runnable
         }
     }
     
+    public void stop() {
+        player.close();
+    }
+    
     class PlayerThread extends Thread {
 
         /* (non-Javadoc)
@@ -134,18 +138,6 @@ public class MyPlayer implements Runnable
             }
         }
     }
-    
-//    private int position()
-//    {
-//        int position = 0;
-//        
-//        try
-//        {
-//            player =
-//        }
-//        
-//        return position;
-//    }
 
     @Override
     public void run() 

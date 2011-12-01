@@ -11,10 +11,11 @@ public class MediaPlayer
     {        
       Controls begin = new Controls();
       
+      
 
-      ToolBar mba = new ToolBar();
-      mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      mba.setVisible(true);
+      //ToolBar mba = new ToolBar();
+      //mba.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      //mba.setVisible(true);
       
 
     }
