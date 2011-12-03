@@ -3,41 +3,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Controls extends JPanel implements ActionListener 
+public class Controls extends JPanel implements ActionListener
 {
     private JFrame frame;
-    private JButton selectFile, playButton, stopButton, time;
+    private JButton selectFile, playButton, stopButton, pause, resume;
     private JLabel position;
-    private MyPlayer myPlayer;
     private Thread myThread;
-    
-    File filepath;
-    String fileString;
+    private Mp3Player player;
+    private File filepath;
+    private JLabel timeLabel;
+    private Thread timeUpdater;
 
     public Controls() 
     {
-        frame = new JFrame();
-        frame.setTitle("Controls");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(this);        
-        frame.setBounds(400,200,400,400);
-        //frame.setSize(300, 400);
-        frame.setVisible(true);
+//        frame = new JFrame();
+//        frame.setTitle("Controls");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.add(this);
+//        frame.setBounds(400, 200, 400, 400);
+//        // frame.setSize(300, 400);
+//        frame.setVisible(true);
 
         populateGUI();
     }
 
-    private void populateGUI() 
+    private void populateGUI()
     {
         this.setLayout(new FlowLayout());
-        
+
         selectFile = new JButton("Select Song");
         selectFile.addActionListener(this);
         add(selectFile);
@@ -49,70 +48,100 @@ public class Controls extends JPanel implements ActionListener
         stopButton = new JButton("Stop");
         stopButton.addActionListener(this);
         add(stopButton);
-        
-        time = new JButton("Time");
-        time.addActionListener(this);
-        add(time);
-        
+
+        pause = new JButton("Pause");
+        pause.addActionListener(this);
+        add(pause);
+
+        resume = new JButton("Resume");
+        resume.addActionListener(this);
+        add(resume);
+
         position = new JLabel("");
         add(position);
+
+        timeLabel = new JLabel("Time: ");
+        add(timeLabel);
+
     }
-    
+
     @Override
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == selectFile) 
         {
             JFileChooser chooser = new JFileChooser();
             int returnVal = chooser.showOpenDialog(null);
-            filepath = chooser.getSelectedFile();   
-            try {
-                fileString = filepath.getCanonicalPath();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            filepath = chooser.getSelectedFile();
+            System.out.println(filepath.getAbsolutePath());
         }
         if (e.getSource() == playButton) 
         {
-            Mp3Player a = new Mp3Player(filepath);
-            myThread = new Thread(a);
+            // instantiate the mp3player
+            player = new Mp3Player(filepath);
+            // now start the mp3player thread to play music
+            myThread = new Thread(player);
             myThread.start();
-//            while (Mp3Player.getPosition() < 122000)
-//            {
-//                String elapsed;
-//                elapsed = "" + Mp3Player.getPosition();
-//                position.setText(elapsed);
-//            }
+            // start the thread that updates the gui based on time
+            timeUpdater = new TimeUpdater();
+            timeUpdater.start();
+
         }
-        if (e.getSource() == stopButton) 
+        if (e.getSource() == stopButton)
         {
-            if (myThread.isAlive())
+            if (myThread.isAlive()) 
             {
                 myThread.stop();
             }
         }
-        if (e.getSource() == time) 
+        if (e.getSource() == pause) 
         {
-            //if (myThread.isAlive())
-            while (Mp3Player.getPosition() < 122000)
+            if (myThread.isAlive()) 
             {
-                String elapsed;
-                elapsed = "" + Mp3Player.getPosition();
-                
-                position.setText(elapsed);
+                myThread.suspend();
+            }
+        }
+        if (e.getSource() == resume) 
+        {
+            if (myThread.isAlive()) 
+            {
+                myThread.resume();
             }
         }
     }
-    
-    public void time(int are)
+
+    // a thread which reads the position from Mp3Player and updates the gui
+    class TimeUpdater extends Thread
     {
-        String elapsed;
-        elapsed = "" + are;
-        
-        position.setText(elapsed);
+        // This method is called when the thread runs
+        @Override
+        public void run() 
+        {
+            // wait for 2 seconds to allow the song to load before starting to change the gui
+            // this is dirty and should be fixed using wait and notify or something of the sort
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            while (player.isPlaying())
+            {
+                timeLabel.setText("Current Time: " + toSeconds(player.getPosition()));
+            }
+        }
+
+        private double toSeconds(int time)
+        {
+            Double d = (double) (time / 1000);
+            return d;
+        }
     }
 
-    public static void main(String[] args) 
+
+
+    public static void main(String[] args)
     {
         new Controls();
     }

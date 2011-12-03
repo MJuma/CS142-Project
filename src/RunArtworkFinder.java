@@ -1,18 +1,23 @@
+import java.io.FileNotFoundException;
+
 
 public class RunArtworkFinder {
 
 	/**
 	 * @param args
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		
-		String artist = "Wayne";
-		String album = "random";
+		String artist = "The Beatles";
+		String album = "The White Album";
 
 		ArtworkFinder a = new ArtworkFinder(artist, album);
-		a.getArtwork();
+		String fileName = a.getArtwork();
 		
+		GUI_Image b = new GUI_Image(fileName, artist, album);
+		b.displayImage();
 	}
 
 }

@@ -1,10 +1,12 @@
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.awt.Desktop;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-
+import java.io.*;
 
 public class ArtworkFinder {
 
@@ -47,7 +49,7 @@ public class ArtworkFinder {
 
 
 
-	public void getArtwork(){  // opens google images with the specified search words
+	public String getArtwork() throws FileNotFoundException{  // opens google images with the specified search words
 		try {
 			URI uri = new URI("http://images.google.com/search?tbm=isch&hl=en&source=hp&biw=1366&bih=705&q="+searchKeyWord + "+" + searchKeyWord2 + "&gbv=");
 			Desktop desktop = null;					//lines 53 - 64 borrowed from http://www.java2s.com/Code/Java/JDK-6/UsingtheDesktopclasstolaunchaURLwithdefaultbrowser.htm
@@ -67,8 +69,19 @@ public class ArtworkFinder {
 
 		JOptionPane.showMessageDialog(null, "Right click on your image choice and save it to a known location");
 		
+		JFileChooser fc = new JFileChooser();  
+		int returnCode = fc.showOpenDialog(null); //Opens the window for the user to choose which file they are copying from
+		if (returnCode != JFileChooser.APPROVE_OPTION){
+			System.exit(2);
+		}
 		
-
+		File selectedFile = fc.getSelectedFile();
+		String fileName = selectedFile.getPath();
+		
+		//System.out.println(fileName);
+		
+		return fileName;
+		
 	}
 
 }

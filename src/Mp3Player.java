@@ -1,83 +1,80 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-public class Mp3Player implements Runnable 
-{
+public class Mp3Player implements Runnable {
     private static Player player;
     private InputStream stream;
-    
-    /** Constructor used to call this object.
-     *  Takes in a file and sends it to the inputstream for the player to read.
-     *  
+
+    /**
+     * Constructor used to call this object. Takes in a file and sends it to the inputstream for the player to read.
+     * 
      * @param filename
      */
-    public Mp3Player(File filename) 
-    {
-        try 
-        {
+    public Mp3Player(File filename) {
+        try {
             // Create an InputStream to the file
             stream = new FileInputStream(filename);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    /** Method used to play the song.
+
+    public Mp3Player(String string) {
+        try {
+            stream = new FileInputStream(string);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method used to play the song.
      * 
      */
-    private void play() 
-    {
-        try 
-        {
+    private void play() {
+        try {
             player = new Player(stream);
             player.play();
-            
             Controls a = new Controls();
             System.out.println('a');
 
-            while (!player.isComplete()) 
-            {
-                a.time(player.getPosition());
-                int position = player.getPosition();
-                System.out.println("Position: " + position);
-                try 
-                {
-                    Thread.sleep(1000);
-                } 
-                catch (Exception ee) 
-                {
-                    ee.printStackTrace();
-                }
-            }
-        }
-        catch (JavaLayerException e)
-        {
+        } catch (JavaLayerException e) {
             e.printStackTrace();
         }
     }
-    
-    public static int getPosition()
-    {
-        return player.getPosition();
+
+    public int getPosition() {
+        try {
+            return player.getPosition();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
-    
-    public static boolean isComplete()
-    {
+
+    public boolean isPlaying() {
+        if (getPosition() > 0)
+            return true;
+        return false;
+    }
+
+    public boolean isComplete() {
         return player.isComplete();
     }
-    
+
     /* Method used to implement Runnable and run this object in its own thread.
      * 
      * (non-Javadoc)
-     * @see java.lang.Runnable#run()
-     */
+     * 
+     * @see java.lang.Runnable#run() */
     @Override
-    public void run()
-    {
+    public void run() {
         play();
     }
 }
+
