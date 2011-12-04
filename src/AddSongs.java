@@ -31,13 +31,13 @@ public class AddSongs
             filepath = selectedFile[i];
             Tagger tags = new Tagger(filepath);
             
-            title.add(i, tags.Title());
-            artist.add(i, tags.Artist());
-            album.add(i, tags.Album());
-            length.add(i, tags.Length());
+            title.add(i, tags.title());
+            artist.add(i, tags.artist());
+            album.add(i, tags.album());
+            length.add(i, tags.length());
             //track.add(i, tags.Track());
-            year.add(i, tags.Year());
-            genre.add(i, tags.Genre());
+            year.add(i, tags.year());
+            genre.add(i, tags.genre());
             try {
                 path.add(i, filepath.getCanonicalPath());
             } catch (IOException e) {
@@ -45,11 +45,46 @@ public class AddSongs
             }
         }
         
-        for(int i = 0; i<=selectedFile.length - 1; i++)
-        {
-            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
-        }
+
+        
+//        for(int i = 0; i<=selectedFile.length - 1; i++)
+//        {
+//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
+//        }
  
+    }
+    
+    public ArrayList<String> getTitle()
+    {
+        return title;
+    }
+    public ArrayList<String> getArtist()
+    {
+        return artist;
+    }
+    public ArrayList<String> getAlbum()
+    {
+        return album;
+    }
+    public ArrayList<Integer> getLength()
+    {
+        return length;
+    }
+//    public ArrayList<String> getTrack()
+//    {
+//        return track;
+//    }
+    public ArrayList<String> getYear()
+    {
+        return year;
+    }
+    public ArrayList<String> getGenre()
+    {
+        return genre;
+    }
+    public ArrayList<String> getPath()
+    {
+        return path;
     }
      
     

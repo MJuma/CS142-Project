@@ -63,7 +63,7 @@ public class Tagger
     /** Returns the song title
      * @return
      */
-    public String Title()
+    public String title()
     {
         return (v2tag.getFirst(ID3v24Frames.FRAME_ID_TITLE));
     }
@@ -71,7 +71,7 @@ public class Tagger
     /** Returns the song artist
      * @return
      */
-    public String Artist()
+    public String artist()
     {
         return (v2tag.getFirst(ID3v24Frames.FRAME_ID_ARTIST));
     }
@@ -79,7 +79,7 @@ public class Tagger
     /** Returns the song album
      * @return
      */
-    public String Album()
+    public String album()
     {
         return (v2tag.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
     }
@@ -88,7 +88,7 @@ public class Tagger
     /** Returns the song length as an int
      * @return
      */
-    public int Length()
+    public int length()
     {
         return audioHeader.getTrackLength();
     }
@@ -96,7 +96,7 @@ public class Tagger
     /** Returns the songs length as a string
      * @return
      */
-    public String LengthString()
+    public String lengthString()
     {
         return audioHeader.getTrackLengthAsString();
     }
@@ -104,7 +104,7 @@ public class Tagger
     /** Returns the songs year
      * @return
      */
-    public String Year()
+    public String year()
     {
         return (v2tag.getFirst(ID3v24Frames.FRAME_ID_YEAR));
     }
@@ -112,7 +112,7 @@ public class Tagger
     /** Returns the songs genre
      * @return
      */
-    public String Genre()
+    public String genre()
     {
         return (v2tag.getFirst(ID3v24Frames.FRAME_ID_GENRE));
     }

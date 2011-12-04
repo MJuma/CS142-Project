@@ -8,62 +8,89 @@ import javax.swing.JFileChooser;
 public class AddPlaylist 
 {
     File filepath;
-
+    ArrayList<String> title = new ArrayList<String>();
+    ArrayList<String> artist = new ArrayList<String>();
+    ArrayList<String> album = new ArrayList<String>();
+    //ArrayList<String> track = new ArrayList<String>();
+    ArrayList<String> year = new ArrayList<String>();
+    ArrayList<String> genre = new ArrayList<String>();
+    ArrayList<String> path = new ArrayList<String>();
+    ArrayList<Integer> length = new ArrayList<Integer>();
+    
     public AddPlaylist()
     {
         JFileChooser chooser = new JFileChooser();
-        chooser.setMultiSelectionEnabled(true);    //allows file chooser to select multiple files
         int returnVal = chooser.showOpenDialog(null);
-
+        
         ArrayList<File> list = new ArrayList<File>();
-
-
         File[] selectedFile = chooser.getSelectedFiles();
-
-
-
-        for(int i = 0; i<=selectedFile.length - 1; i++){
-
+        
+        for(int i = 0; i<=selectedFile.length - 1; i++)
+        {
             filepath = selectedFile[i];
-            String title,
-            artist,
-            album,
-            track,
-            year,
-            genre,
-            path = null;
-            int length;
-
             Tagger tags = new Tagger(filepath);
-
-            title = tags.Title();
-
-            artist = tags.Artist();
-
-            album = tags.Album();
-
-            length = tags.Length();
-
-            //track = tags.Track();
-
-            year = tags.Year();
-
-            genre = tags.Genre();
-
+            
+            title.add(i, tags.title());
+            artist.add(i, tags.artist());
+            album.add(i, tags.album());
+            length.add(i, tags.length());
+            //track.add(i, tags.Track());
+            year.add(i, tags.year());
+            genre.add(i, tags.genre());
             try {
-                path = filepath.getCanonicalPath();
+                path.add(i, filepath.getCanonicalPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            System.out.println(title + "  " + artist + "  " + album + "  " + length + "  " + year + "  " + genre + "  " + path);
         }
-    }
+        
 
-    public static void main(String[] args)
-    {
-        new AddPlaylist();
+        
+//        for(int i = 0; i<=selectedFile.length - 1; i++)
+//        {
+//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
+//        }
+ 
     }
+    
+    public ArrayList<String> getTitle()
+    {
+        return title;
+    }
+    public ArrayList<String> getArtist()
+    {
+        return artist;
+    }
+    public ArrayList<String> getAlbum()
+    {
+        return album;
+    }
+    public ArrayList<Integer> getLength()
+    {
+        return length;
+    }
+//    public ArrayList<String> getTrack()
+//    {
+//        return track;
+//    }
+    public ArrayList<String> getYear()
+    {
+        return year;
+    }
+    public ArrayList<String> getGenre()
+    {
+        return genre;
+    }
+    public ArrayList<String> getPath()
+    {
+        return path;
+    }
+     
+    
+//    public static void main(String[] args)
+//    {
+//        new AddSongs();
+//    }
 
 
 
