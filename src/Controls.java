@@ -18,21 +18,17 @@ public class Controls extends JPanel implements ActionListener
     private File filepath;
     private JLabel timeLabel;
     private Thread timeUpdater;
+    
+    int state = 0;
 
     public Controls() 
     {
-//        frame = new JFrame();
-//        frame.setTitle("Controls");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.add(this);
-//        frame.setBounds(400, 200, 400, 400);
-//        frame.setVisible(true);
-        
-        this.setLayout(new FlowLayout());
+        this.filepath = filepath;
 
-        selectFile = new JButton("Select Song");
-        selectFile.addActionListener(this);
-        add(selectFile);
+//        selectFile = new JButton("Select Song");
+//        selectFile.addActionListener(this);
+//        setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//        add(selectFile);
 
         playButton = new JButton("Play");
         playButton.addActionListener(this);
@@ -69,14 +65,33 @@ public class Controls extends JPanel implements ActionListener
         }
         if (e.getSource() == playButton) 
         {
-            // instantiate the mp3player
-            player = new Mp3Player(filepath);
-            // now start the mp3player thread to play music
-            myThread = new Thread(player);
-            myThread.start();
-            // start the thread that updates the gui based on time
-            timeUpdater = new TimeUpdater();
-            timeUpdater.start();
+            File playPath;
+            MainGUI main = new MainGUI();
+            playPath = main.getPlayPath();
+            player = new Mp3Player(playPath);
+            
+            if (state == 0)
+            {
+                myThread = new Thread(player);
+                if (!myThread.isAlive())
+                {
+                state = 1;
+                myThread.start();
+                timeUpdater = new TimeUpdater();
+                timeUpdater.start();
+                state = 0;
+                }
+            }
+            else if (state == 1)
+            {
+                myThread.suspend();
+                state = 2;
+            }
+            else if (state == 2)
+            {
+                myThread.resume();
+                state = 0;
+            }
 
         }
         if (e.getSource() == stopButton)
@@ -133,9 +148,9 @@ public class Controls extends JPanel implements ActionListener
 
 
 
-    public static void main(String[] args)
-    {
-        new Controls();
-    }
+//    public static void main(String[] args)
+//    {
+//        new Controls();
+//    }
 
 }

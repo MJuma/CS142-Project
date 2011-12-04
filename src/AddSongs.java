@@ -16,6 +16,7 @@ public class AddSongs
     ArrayList<String> genre = new ArrayList<String>();
     ArrayList<String> path = new ArrayList<String>();
     ArrayList<Integer> length = new ArrayList<Integer>();
+    ArrayList<File> file = new ArrayList<File>();
     
     public AddSongs()
     {
@@ -28,6 +29,7 @@ public class AddSongs
         
         for(int i = 0; i<=selectedFile.length - 1; i++)
         {
+            file.add(i, selectedFile[i]);
             filepath = selectedFile[i];
             Tagger tags = new Tagger(filepath);
             
@@ -85,6 +87,10 @@ public class AddSongs
     public ArrayList<String> getPath()
     {
         return path;
+    }
+    public ArrayList<File> getFile()
+    {
+        return file;
     }
      
     
