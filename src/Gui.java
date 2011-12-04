@@ -7,14 +7,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.awt.FlowLayout;
 
 
 public class Gui extends JPanel
@@ -38,7 +37,7 @@ public class Gui extends JPanel
       gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
       setLayout(gridBagLayout);
       
-      JScrollPane playlistPane = new JScrollPane();
+      JPanel playlistPane = new JPanel();
       GridBagConstraints gbc_playlistPane = new GridBagConstraints();
       gbc_playlistPane.gridheight = 2;
       gbc_playlistPane.insets = new Insets(0, 0, 5, 5);
@@ -48,10 +47,8 @@ public class Gui extends JPanel
       add(playlistPane, gbc_playlistPane);
       
       PlaylistTab startPlaylistTab = new PlaylistTab();
-      playlistPane.add(startPlaylistTab);
-      playlistPane.setViewportView(table);
-      
-      
+      FlowLayout flowLayout = (FlowLayout) startPlaylistTab.getLayout();
+      playlistPane.add(startPlaylistTab);      
       
       JScrollPane selectedPlaylistPane = new JScrollPane();
       GridBagConstraints gbc_selectedPlaylistPane = new GridBagConstraints();
@@ -139,6 +136,7 @@ public class Gui extends JPanel
       
       JMenuItem menuItemHelp_Credits = new JMenuItem("Credits");
       menuItemHelp.add(menuItemHelp_Credits);
+      
       
       frame.setVisible(true);
       

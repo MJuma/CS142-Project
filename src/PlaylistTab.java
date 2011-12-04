@@ -1,10 +1,8 @@
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
  
 public class PlaylistTab extends JPanel {
  
@@ -13,40 +11,29 @@ public class PlaylistTab extends JPanel {
         this.setLayout(new FlowLayout());
 
  
-        String[] columnNames = {"Playlists"
-                                };
+        String[] columnNames = {"Playlists"};
  
-        Object[][] data = {
-        {"Kathy"},
-        {"John"},
-        {"Sue"},
-        {"Jane"},
-        {"Joe"}
-        };
+        Object[][] data = 
+            {
+                {"Song 1"},
+                {"Song 2"},
+                {"Song 3"},
+                {"Song 4"},
+                {"Song 5"}
+            };
  
         JTable table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(100, 200));
+        table.setPreferredScrollableViewportSize(new Dimension(209, 360));
         table.setFillsViewportHeight(true);
 
         JScrollPane scrollPane = new JScrollPane(table);
         
         add(scrollPane);
     }
- 
-    private static void createAndShowGUI() {
-        JFrame frame = new JFrame("SimpleTableDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        PlaylistTab newContentPane = new PlaylistTab();
-        newContentPane.setOpaque(true);
-        frame.setContentPane(newContentPane);
- 
-        frame.pack();
-        frame.setVisible(true);
-    }
- 
-    public static void main(String[] args) 
-    {
-        createAndShowGUI();
-    }
+   
+//    public static void main(String[] args) 
+//    {
+//        createAndShowGUI();
+//    }
 }
