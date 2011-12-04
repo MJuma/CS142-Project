@@ -69,13 +69,13 @@ public class Controls extends JPanel implements ActionListener
             MainGUI main = new MainGUI();
             playPath = main.getPlayPath();
             player = new Mp3Player(playPath);
-            
+
             if (state == 0)
             {
-                myThread = new Thread(player);
-                if (!myThread.isAlive())
+                if (!player.isPlaying())
                 {
                 state = 1;
+                myThread = new Thread(player);
                 myThread.start();
                 timeUpdater = new TimeUpdater();
                 timeUpdater.start();
