@@ -6,9 +6,15 @@ import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Gui extends JPanel
@@ -16,6 +22,7 @@ public class Gui extends JPanel
     
     private JFrame frame;
     private JButton test;
+    private JTable table;
 
     
     public Gui()
@@ -40,6 +47,12 @@ public class Gui extends JPanel
       gbc_playlistPane.gridy = 0;
       add(playlistPane, gbc_playlistPane);
       
+      PlaylistTab startPlaylistTab = new PlaylistTab();
+      playlistPane.add(startPlaylistTab);
+      playlistPane.setViewportView(table);
+      
+      
+      
       JScrollPane selectedPlaylistPane = new JScrollPane();
       GridBagConstraints gbc_selectedPlaylistPane = new GridBagConstraints();
       gbc_selectedPlaylistPane.gridheight = 2;
@@ -50,6 +63,7 @@ public class Gui extends JPanel
       add(selectedPlaylistPane, gbc_selectedPlaylistPane);
       
       JPanel artworkPane = new JPanel();
+      artworkPane.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
       GridBagConstraints gbc_artworkPane = new GridBagConstraints();
       gbc_artworkPane.insets = new Insets(0, 0, 0, 5);
       gbc_artworkPane.fill = GridBagConstraints.BOTH;
@@ -67,7 +81,7 @@ public class Gui extends JPanel
       Controls startControls = new Controls();
       controlsPane.add(startControls);
       
-      frame.setBounds(400, 200, 400, 400);
+      frame.setBounds(300, 100, 700, 550);
       
       JMenuBar menuBar = new JMenuBar();
       frame.setJMenuBar(menuBar);
