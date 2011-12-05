@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.EventQueue;
 
 import javax.swing.JFileChooser;
@@ -27,18 +30,33 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainGUI.
+ */
 public class MainGUI implements ActionListener
 {
 
+    /** The frame. */
     private JFrame frame;
+    
+    /** The playlist table. */
     private JTable mainWindowTable, playlistTable;
+    
+    /** The menu help_ about. */
     JMenuItem menuFile_AddSong, menuFile_AddPlaylist, menuFile_Exit, menuEdit_FindArtwork, menuControls, menuControls_PlayPause, menuControls_Stop,
               menuControls_Next, menuControls_Previous, menuHelp_Tutorial, menuHelp_Credits, menuHelp_About;
+    
+    /** The start controls. */
     Controls startControls;
+    
+    /** The play path. */
     static File playPath;
 
     /**
      * Launch the application.
+     *
+     * @param args the arguments
      */
     public static void main(String[] args) 
     {
@@ -249,14 +267,7 @@ public class MainGUI implements ActionListener
 
         JScrollPane scrollPane_1 = new JScrollPane();
 
-        Object[][] playlists = 
-            {
-                {"Song 1"},
-                {"Song 2"},
-                {"Song 3"},
-                {"Song 4"},
-                {"Song 5"}
-            };
+        String[][] playlists = {};
 
 
         String[] playlistsColumnName = {"Playlists"};
@@ -296,6 +307,9 @@ public class MainGUI implements ActionListener
         frame.getContentPane().setLayout(groupLayout);
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -356,6 +370,11 @@ public class MainGUI implements ActionListener
         }
     }
     
+    /**
+     * Gets the play path.
+     *
+     * @return the play path
+     */
     public File getPlayPath()
     {
         return playPath;

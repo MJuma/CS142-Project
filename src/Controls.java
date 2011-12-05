@@ -3,15 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Controls extends JPanel implements ActionListener
 {
-    private JFrame frame;
-    private JButton selectFile, playButton, stopButton, pause, resume;
+    private JButton playButton, stopButton, pause, resume;
     private JLabel position;
     private Thread myThread;
     private Mp3Player player;
@@ -23,13 +21,6 @@ public class Controls extends JPanel implements ActionListener
 
     public Controls() 
     {
-//        this.filepath = filepath;
-
-//        selectFile = new JButton("Select Song");
-//        selectFile.addActionListener(this);
-//        setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-//        add(selectFile);
-
         playButton = new JButton("Play");
         playButton.addActionListener(this);
         add(playButton);
@@ -56,18 +47,8 @@ public class Controls extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-//        if (e.getSource() == selectFile) 
-//        {
-//            JFileChooser chooser = new JFileChooser();
-//            int returnVal = chooser.showOpenDialog(null);
-//            filepath = chooser.getSelectedFile();
-//            System.out.println(filepath.getAbsolutePath());
-//        }
         if (e.getSource() == playButton) 
         {
-//            File playPath;
-//            MainGUI main = new MainGUI();
-//            playPath = main.getPlayPath();
             player = new Mp3Player(filePath);
 
             if (state == 0)
@@ -125,7 +106,6 @@ public class Controls extends JPanel implements ActionListener
         public void run() 
         {
             // wait for 2 seconds to allow the song to load before starting to change the gui
-            // this is dirty and should be fixed using wait and notify or something of the sort
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e)

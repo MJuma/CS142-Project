@@ -55,25 +55,25 @@ public class AddPlaylist
 
 
 
-//        for(int i = 0; i<=lines; i++)
-//        {
-//            //file.add(i, selectedFile[i]);
-//            filepath = listOfFiles[i];
-//            Tagger tags = new Tagger(filepath);
-//
-//            title.add(i, tags.title());
-//            artist.add(i, tags.artist());
-//            album.add(i, tags.album());
-//            length.add(i, tags.length());
-//            //track.add(i, tags.Track());
-//            year.add(i, tags.year());
-//            genre.add(i, tags.genre());
-//        }
-//
-//        for(int i = 0; i<=lines; i++)
-//        {
-//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i));
-//        }
+        for(int i = 0; i<=lines; i++)
+        {
+            //file.add(i, selectedFile[i]);
+            filepath = listOfFiles[i];
+            Tagger tags = new Tagger(filepath);
+
+            title.add(i, tags.title());
+            artist.add(i, tags.artist());
+            album.add(i, tags.album());
+            length.add(i, tags.length());
+            //track.add(i, tags.Track());
+            year.add(i, tags.year());
+            genre.add(i, tags.genre());
+        }
+
+        for(int i = 0; i<=lines; i++)
+        {
+            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i));
+        }
     }
 
     public ArrayList<String> getTitle()
