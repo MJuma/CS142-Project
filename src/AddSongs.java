@@ -20,25 +20,29 @@ public class AddSongs
     
     public AddSongs()
     {
+        // Use chooser to get the selected files by the user.
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(true);    // Allows file chooser to select multiple files
         int returnVal = chooser.showOpenDialog(null);
         
+        // Send the selected files to the selectedFile File array
         File[] selectedFile = chooser.getSelectedFiles();
         
+        // Using a for loop send each selectFile to tagger and then put it in its appropriate array.
         for(int i = 0; i<=selectedFile.length - 1; i++)
         {
-            file.add(i, selectedFile[i]);
-            filepath = selectedFile[i];
-            Tagger tags = new Tagger(filepath);
+            file.add(i, selectedFile[i]); // Used to give the Controls class the current song.
+            filepath = selectedFile[i]; // Puts the current song in a filepath variable of type File
+            Tagger tags = new Tagger(filepath); // Passes the filepath variable to tagger and instantiates tagger
             
-            title.add(i, tags.title());
+            title.add(i, tags.title()); // Uses tagger to find the title of the song and puts it in its array.
             artist.add(i, tags.artist());
             album.add(i, tags.album());
             length.add(i, tags.length());
             //track.add(i, tags.Track());
             year.add(i, tags.year());
             genre.add(i, tags.genre());
+            // Puts the selectedSongs path in a string.
             try {
                 path.add(i, filepath.getCanonicalPath());
             } catch (IOException e) {

@@ -64,7 +64,7 @@ public class AddPlaylist
 
         for(int i = 0; i<=lines; i++)
         {
-            //file.add(i, selectedFile[i]);
+            file.add(i, listOfFiles[i]);
             filepath = listOfFiles[i];
             Tagger tags = new Tagger(filepath);
 
