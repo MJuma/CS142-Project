@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 public class AddPlaylist 
 {
     File filepath;
-    File[] listOfFiles;
+    //File[] listOfFiles;
     ArrayList<String> title = new ArrayList<String>();
     ArrayList<String> artist = new ArrayList<String>();
     ArrayList<String> album = new ArrayList<String>();
@@ -32,6 +32,7 @@ public class AddPlaylist
         BufferedReader buffer2 = new BufferedReader(reader2);
         int lines = 0;
 
+        // Text file is read and the number of lines in it are passed to the int variable lines.
         while (true) 
         {
             String aLine = buffer.readLine();
@@ -40,19 +41,25 @@ public class AddPlaylist
         }
         lines--;
 
-
+        // Text file is read and the lines are read into the ArrayList path of type String
         for (int i = 0; i<=lines; i++)
         {
             String bLine = buffer2.readLine();
             path.add(i, bLine);                     
-            //listOfFiles[lines] = new File(bLine);
         }
         
+        // Prints the contents of path
         for (int i = 0; i<=lines; i++)
         {
             System.out.println(path.get(i));
         }
+        
+        File[] listOfFiles = new File[lines];
 
+        for (int i = 0; i<=lines -1; i++)
+        {
+            listOfFiles[i] = new File(path.get(i));
+        }
 
 
         for(int i = 0; i<=lines; i++)

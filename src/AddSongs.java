@@ -48,10 +48,10 @@ public class AddSongs
         
 
         
-//        for(int i = 0; i<=selectedFile.length - 1; i++)
-//        {
-//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
-//        }
+        for(int i = 0; i<=selectedFile.length - 1; i++)
+        {
+            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
+        }
  
     }
     
