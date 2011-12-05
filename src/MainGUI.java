@@ -20,7 +20,9 @@ import javax.swing.JMenuItem;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -29,22 +31,10 @@ public class MainGUI implements ActionListener
 {
 
     private JFrame frame;
-    private JTable mainWindowTable;
-    private JTable playlistTable;
-
-    JMenuItem menuFile_AddSong,
-    menuFile_AddPlaylist,
-    menuFile_Exit,
-    menuEdit_FindArtwork,
-    menuControls,
-    menuControls_PlayPause,
-    menuControls_Stop,
-    menuControls_Next,
-    menuControls_Previous,
-    menuHelp_Tutorial,
-    menuHelp_Credits,
-    menuHelp_About;
-    
+    private JTable mainWindowTable, playlistTable;
+    JMenuItem menuFile_AddSong, menuFile_AddPlaylist, menuFile_Exit, menuEdit_FindArtwork, menuControls, menuControls_PlayPause, menuControls_Stop,
+              menuControls_Next, menuControls_Previous, menuHelp_Tutorial, menuHelp_Credits, menuHelp_About;
+    Controls startControls;
     static File playPath;
 
     /**
@@ -71,14 +61,6 @@ public class MainGUI implements ActionListener
      * Create the application.
      */
     public MainGUI() 
-    {
-        initialize();
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize()
     {
         frame = new JFrame();
         frame.setBounds(100, 100, 700, 550);
@@ -191,14 +173,18 @@ public class MainGUI implements ActionListener
 
         JLabel controlsPanel_Title = new JLabel("Media Player");
         controlsPanel.add(controlsPanel_Title);
-        Controls startControls = new Controls();
+        startControls = new Controls();
         controlsPanel.add(startControls);
 
+        Object[][] al = new Object[][] {};
+
+        //al.add("C"); 
+        
         mainWindowTable = new JTable();
         mainWindowTable.setModel(new DefaultTableModel(
-                new Object[][] 
+                new ArrayList[][] 
                         {
-                        {null, "", "", null, null, null},
+                        {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
@@ -275,9 +261,9 @@ public class MainGUI implements ActionListener
 
         String[] playlistsColumnName = {"Playlists"};
 
-        ArrayList al = new ArrayList();
+       // ArrayList al = new ArrayList();
 
-        al.add("C"); 
+        //al.add("C"); 
 
         playlistTable = new JTable();
         playlistTable.setModel(new DefaultTableModel(playlists, playlistsColumnName));
@@ -318,6 +304,9 @@ public class MainGUI implements ActionListener
             AddSongs as = new AddSongs();
             
             playPath = as.getFile().get(0);
+            
+            startControls.setPlayPath(playPath);
+
             
 //          for(int i = 0; i<=as.getTitle().size() - 1; i++)
 //          {

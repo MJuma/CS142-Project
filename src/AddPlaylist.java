@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +10,7 @@ import javax.swing.JFileChooser;
 public class AddPlaylist 
 {
     File filepath;
+    File[] listOfFiles;
     ArrayList<String> title = new ArrayList<String>();
     ArrayList<String> artist = new ArrayList<String>();
     ArrayList<String> album = new ArrayList<String>();
@@ -16,43 +19,63 @@ public class AddPlaylist
     ArrayList<String> genre = new ArrayList<String>();
     ArrayList<String> path = new ArrayList<String>();
     ArrayList<Integer> length = new ArrayList<Integer>();
-    
-    public AddPlaylist()
+    ArrayList<File> file = new ArrayList<File>();
+
+    public AddPlaylist() throws IOException
     {
         JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
-        
-        ArrayList<File> list = new ArrayList<File>();
-        File[] selectedFile = chooser.getSelectedFiles();
-        
-        for(int i = 0; i<=selectedFile.length - 1; i++)
+        int returnValue = chooser.showSaveDialog(null);
+
+        FileReader reader = new FileReader(chooser.getSelectedFile());
+        BufferedReader buffer = new BufferedReader(reader);
+        FileReader reader2 = new FileReader(chooser.getSelectedFile());
+        BufferedReader buffer2 = new BufferedReader(reader2);
+        int lines = 0;
+
+        while (true) 
         {
-            filepath = selectedFile[i];
-            Tagger tags = new Tagger(filepath);
-            
-            title.add(i, tags.title());
-            artist.add(i, tags.artist());
-            album.add(i, tags.album());
-            length.add(i, tags.length());
-            //track.add(i, tags.Track());
-            year.add(i, tags.year());
-            genre.add(i, tags.genre());
-            try {
-                path.add(i, filepath.getCanonicalPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String aLine = buffer.readLine();
+            if (aLine == null) break;
+            lines++;
+        }
+        lines--;
+
+
+        for (int i = 0; i<=lines; i++)
+        {
+            String bLine = buffer2.readLine();
+            path.add(i, bLine);                     
+            //listOfFiles[lines] = new File(bLine);
         }
         
+        for (int i = 0; i<=lines; i++)
+        {
+            System.out.println(path.get(i));
+        }
 
-        
-//        for(int i = 0; i<=selectedFile.length - 1; i++)
+
+
+//        for(int i = 0; i<=lines; i++)
 //        {
-//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
+//            //file.add(i, selectedFile[i]);
+//            filepath = listOfFiles[i];
+//            Tagger tags = new Tagger(filepath);
+//
+//            title.add(i, tags.title());
+//            artist.add(i, tags.artist());
+//            album.add(i, tags.album());
+//            length.add(i, tags.length());
+//            //track.add(i, tags.Track());
+//            year.add(i, tags.year());
+//            genre.add(i, tags.genre());
 //        }
- 
+//
+//        for(int i = 0; i<=lines; i++)
+//        {
+//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i));
+//        }
     }
-    
+
     public ArrayList<String> getTitle()
     {
         return title;
@@ -69,10 +92,10 @@ public class AddPlaylist
     {
         return length;
     }
-//    public ArrayList<String> getTrack()
-//    {
-//        return track;
-//    }
+    //    public ArrayList<String> getTrack()
+    //    {
+    //        return track;
+    //    }
     public ArrayList<String> getYear()
     {
         return year;
@@ -85,12 +108,16 @@ public class AddPlaylist
     {
         return path;
     }
-     
-    
-//    public static void main(String[] args)
-//    {
-//        new AddSongs();
-//    }
+    public ArrayList<File> getFile()
+    {
+        return file;
+    }
+
+
+    public static void main(String[] args) throws IOException
+    {
+        new AddPlaylist();
+    }
 
 
 

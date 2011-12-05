@@ -24,7 +24,6 @@ public class AddSongs
         chooser.setMultiSelectionEnabled(true);    // Allows file chooser to select multiple files
         int returnVal = chooser.showOpenDialog(null);
         
-        ArrayList<File> list = new ArrayList<File>();
         File[] selectedFile = chooser.getSelectedFiles();
         
         for(int i = 0; i<=selectedFile.length - 1; i++)

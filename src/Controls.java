@@ -15,7 +15,7 @@ public class Controls extends JPanel implements ActionListener
     private JLabel position;
     private Thread myThread;
     private Mp3Player player;
-    private File filepath;
+    private File filePath;
     private JLabel timeLabel;
     private Thread timeUpdater;
     
@@ -23,7 +23,7 @@ public class Controls extends JPanel implements ActionListener
 
     public Controls() 
     {
-        this.filepath = filepath;
+//        this.filepath = filepath;
 
 //        selectFile = new JButton("Select Song");
 //        selectFile.addActionListener(this);
@@ -56,19 +56,19 @@ public class Controls extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == selectFile) 
-        {
-            JFileChooser chooser = new JFileChooser();
-            int returnVal = chooser.showOpenDialog(null);
-            filepath = chooser.getSelectedFile();
-            System.out.println(filepath.getAbsolutePath());
-        }
+//        if (e.getSource() == selectFile) 
+//        {
+//            JFileChooser chooser = new JFileChooser();
+//            int returnVal = chooser.showOpenDialog(null);
+//            filepath = chooser.getSelectedFile();
+//            System.out.println(filepath.getAbsolutePath());
+//        }
         if (e.getSource() == playButton) 
         {
-            File playPath;
-            MainGUI main = new MainGUI();
-            playPath = main.getPlayPath();
-            player = new Mp3Player(playPath);
+//            File playPath;
+//            MainGUI main = new MainGUI();
+//            playPath = main.getPlayPath();
+            player = new Mp3Player(filePath);
 
             if (state == 0)
             {
@@ -144,6 +144,11 @@ public class Controls extends JPanel implements ActionListener
             Double d = (double) (time / 1000);
             return d;
         }
+    }
+    
+    public void setPlayPath(File playPath)
+    {
+        filePath = playPath;
     }
 
 
