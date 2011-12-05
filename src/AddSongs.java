@@ -17,6 +17,7 @@ public class AddSongs
     ArrayList<String> path = new ArrayList<String>();
     ArrayList<Integer> length = new ArrayList<Integer>();
     ArrayList<File> file = new ArrayList<File>();
+    File[] selectedFile;
     
     public AddSongs()
     {
@@ -26,7 +27,7 @@ public class AddSongs
         int returnVal = chooser.showOpenDialog(null);
         
         // Send the selected files to the selectedFile File array
-        File[] selectedFile = chooser.getSelectedFiles();
+        selectedFile = chooser.getSelectedFiles();
         
         // Using a for loop send each selectFile to tagger and then put it in its appropriate array.
         for(int i = 0; i<=selectedFile.length - 1; i++)
@@ -52,10 +53,10 @@ public class AddSongs
         
 
         
-        for(int i = 0; i<=selectedFile.length - 1; i++)
-        {
-            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
-        }
+//        for(int i = 0; i<=selectedFile.length - 1; i++)
+//        {
+//            System.out.println(title.get(i) + "  " + artist.get(i) + "  " + album.get(i) + "  " + length.get(i) + "  " + year.get(i) + "  " + genre.get(i) + "  " + path.get(i));
+//        }
  
     }
     
@@ -94,6 +95,10 @@ public class AddSongs
     public ArrayList<File> getFile()
     {
         return file;
+    }
+    public int songsSelected()
+    {
+        return selectedFile.length;
     }
      
     

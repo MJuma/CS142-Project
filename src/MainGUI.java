@@ -41,7 +41,7 @@ public class MainGUI implements ActionListener
     private JFrame frame;
     
     /** The playlist table. */
-    private JTable mainWindowTable, playlistTable;
+    private JTable mainWindowTable;
     
     /** The menu help_ about. */
     JMenuItem menuFile_AddSong, menuFile_AddPlaylist, menuFile_Exit, menuEdit_FindArtwork, menuControls, menuControls_PlayPause, menuControls_Stop,
@@ -52,6 +52,18 @@ public class MainGUI implements ActionListener
     
     /** The play path. */
     static File playPath;
+    
+    // Main Windows Arrays
+    ArrayList<String> mwtitle = new ArrayList<String>();
+    ArrayList<String> mwartist = new ArrayList<String>();
+    ArrayList<String> mwalbum = new ArrayList<String>();
+    //ArrayList<String> mwtrack = new ArrayList<String>();
+    ArrayList<String> mwyear = new ArrayList<String>();
+    ArrayList<String> mwgenre = new ArrayList<String>();
+    ArrayList<String> mwpath = new ArrayList<String>();
+    ArrayList<Integer> mwlength = new ArrayList<Integer>();
+    ArrayList<File> mwfile = new ArrayList<File>();
+    int songsSelected;
 
     /**
      * Launch the application.
@@ -81,7 +93,7 @@ public class MainGUI implements ActionListener
     public MainGUI() 
     {
         frame = new JFrame();
-        frame.setBounds(100, 100, 700, 550);
+        frame.setBounds(100, 10, 1000, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menuBar = new JMenuBar();
@@ -143,9 +155,6 @@ public class MainGUI implements ActionListener
         menuHelp.add(menuHelp_About);
         menuHelp_About.addActionListener(this);
 
-        JPanel playlistPanel = new JPanel();
-        playlistPanel.setToolTipText("");
-
         JPanel controlsPanel = new JPanel();
         controlsPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 
@@ -156,35 +165,30 @@ public class MainGUI implements ActionListener
         artworkPanel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         groupLayout.setHorizontalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING)
+            groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
-                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(playlistPanel, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addGap(6)
-                                        .addComponent(artworkPanel, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                                                .addComponent(controlsPanel, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
-                                                .addContainerGap())
-                );
+                    .addGap(6)
+                    .addComponent(artworkPanel, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+                    .addGap(7)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+                        .addComponent(controlsPanel, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
+                    .addContainerGap())
+        );
         groupLayout.setVerticalGroup(
-                groupLayout.createParallelGroup(Alignment.TRAILING)
+            groupLayout.createParallelGroup(Alignment.TRAILING)
                 .addGroup(groupLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-                                        .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addComponent(controlsPanel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(7))
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(playlistPanel, GroupLayout.PREFERRED_SIZE, 336, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addComponent(artworkPanel, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                                .addContainerGap())))
-                );
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.UNRELATED)
+                            .addComponent(controlsPanel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+                            .addGap(7))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(artworkPanel, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())))
+        );
 
         JLabel artworkPanel_Title = new JLabel("Art Work");
         artworkPanel.add(artworkPanel_Title);
@@ -193,117 +197,44 @@ public class MainGUI implements ActionListener
         controlsPanel.add(controlsPanel_Title);
         startControls = new Controls();
         controlsPanel.add(startControls);
-
-        Object[][] al = new Object[][] {};
-
-        //al.add("C"); 
+        
+        String[][] str = new String[35][6];
+        
+        for (int i=0; i<35; i++)
+        {
+            for (int j=0; j<6; j++)
+            {
+                str[i][j] = "";
+            }
+        }
+        
+        String[] names = new String[] {"Name", "Artist", "Album", "Genre", "Length", "Year"};
         
         mainWindowTable = new JTable();
-        mainWindowTable.setModel(new DefaultTableModel(
-                new ArrayList[][] 
-                        {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        },
-                        new String[] 
-                                {
-                        "Track #", "Name", "Genre", "Size", "Length", "Path"
-                                }
-                ) {
+        mainWindowTable.setEnabled(false);
+        mainWindowTable.setModel(new DefaultTableModel(str,names )
+        {
             Class[] columnTypes = new Class[] 
                     {
-                    Integer.class, String.class, String.class, Double.class, Double.class, Object.class
+                    String.class, String.class, String.class, String.class, String.class, String.class
                     };
             public Class getColumnClass(int columnIndex) 
             {
                 return columnTypes[columnIndex];
             }
         });
-        mainWindowTable.getColumnModel().getColumn(0).setPreferredWidth(39);
-        mainWindowTable.getColumnModel().getColumn(1).setPreferredWidth(117);
-        mainWindowTable.getColumnModel().getColumn(2).setPreferredWidth(57);
-        mainWindowTable.getColumnModel().getColumn(3).setPreferredWidth(37);
+        mainWindowTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        mainWindowTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        mainWindowTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        mainWindowTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+        mainWindowTable.getColumnModel().getColumn(4).setPreferredWidth(37);
+        mainWindowTable.getColumnModel().getColumn(5).setPreferredWidth(37);
         mainWindowPanel.setViewportView(mainWindowTable);
-
-        JPanel buttonsPlayList = new JPanel();
-        buttonsPlayList.setLayout(new GridLayout(1, 3, 0, 0));
-
-        JButton playlistButton_New = new JButton("New");
-        playlistButton_New.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0) 
-            {
-            }
-        });
-        buttonsPlayList.add(playlistButton_New);
-
-        JButton playlistButton_Edit = new JButton("Edit");
-        buttonsPlayList.add(playlistButton_Edit);
-
-        JButton playlistButton_Delete = new JButton("Delete");
-        buttonsPlayList.add(playlistButton_Delete);
-
-        JScrollPane scrollPane_1 = new JScrollPane();
 
         String[][] playlists = {};
 
 
         String[] playlistsColumnName = {"Playlists"};
-
-       // ArrayList al = new ArrayList();
-
-        //al.add("C"); 
-
-        playlistTable = new JTable();
-        playlistTable.setModel(new DefaultTableModel(playlists, playlistsColumnName));
-
-        GroupLayout gl_playlistPanel = new GroupLayout(playlistPanel);
-        gl_playlistPanel.setHorizontalGroup(
-                gl_playlistPanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_playlistPanel.createSequentialGroup()
-                        .addGroup(gl_playlistPanel.createParallelGroup(Alignment.LEADING)
-                                .addComponent(buttonsPlayList, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(gl_playlistPanel.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(playlistTable, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)))
-                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                );
-        gl_playlistPanel.setVerticalGroup(
-                gl_playlistPanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_playlistPanel.createSequentialGroup()
-                        .addComponent(buttonsPlayList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addGroup(gl_playlistPanel.createParallelGroup(Alignment.TRAILING)
-                                .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(gl_playlistPanel.createSequentialGroup()
-                                        .addComponent(playlistTable, GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                                        .addGap(6))))
-                );
-        playlistPanel.setLayout(gl_playlistPanel);
         frame.getContentPane().setLayout(groupLayout);
     }
 
@@ -319,14 +250,55 @@ public class MainGUI implements ActionListener
             
             playPath = as.getFile().get(0);
             
-            startControls.setPlayPath(playPath);
+            startControls.setPlayPath(as.getFile());
+            
+            mwtitle = as.getTitle();
+            mwalbum = as.getAlbum();
+            mwartist = as.getArtist();
+            mwgenre = as.getGenre();
+            mwyear = as.getYear();
+            mwlength = as.getLength();
+            mwpath = as.getPath();
+            songsSelected = as.songsSelected();
+                                    
+            String[][] str2 = new String[35][6];
+            
+            for (int i=0; i<songsSelected; i++)
+            {
+                for (int j=0; j<6; j++)
+                {
+                    str2[i][0] = mwtitle.get(i);
+                    str2[i][1] = mwartist.get(i);
+                    str2[i][2] = mwalbum.get(i);
+                    str2[i][3] = mwgenre.get(i);
+                    str2[i][4] = (mwlength.get(i)/60) + ":" + (mwlength.get(i)%60);
+                    str2[i][5] = mwyear.get(i);
+                }
+            }
+            
+
 
             
-//          for(int i = 0; i<=as.getTitle().size() - 1; i++)
-//          {
-//              System.out.println(as.getTitle().get(i) + "  " + as.getArtist().get(i) + "  " + as.getAlbum().get(i)
-//                      + "  " + as.getLength().get(i) + "  " + as.getYear().get(i) + "  " + as.getGenre().get(i) + "  " + as.getPath().get(i));
-//          }  
+            String[] names2 = new String[] {"Name", "Artist", "Album", "Genre", "Length", "Year"};
+            
+            mainWindowTable.setModel(new DefaultTableModel(str2,names2)
+            {
+                Class[] columnTypes = new Class[] 
+                        {
+                        String.class, String.class, String.class, String.class, String.class, String.class
+                        };
+                public Class getColumnClass(int columnIndex) 
+                {
+                    return columnTypes[columnIndex];
+                }
+            });
+            mainWindowTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+            mainWindowTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            mainWindowTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+            mainWindowTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+            mainWindowTable.getColumnModel().getColumn(4).setPreferredWidth(37);
+            mainWindowTable.getColumnModel().getColumn(5).setPreferredWidth(37);
+            
         }
         if (e.getSource() == menuFile_AddPlaylist) 
         {
