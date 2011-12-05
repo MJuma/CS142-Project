@@ -39,7 +39,7 @@ public class Controls extends JPanel implements ActionListener
         pause = new JButton("Pause");
         pause.addActionListener(this);
 
-        stopButton = new JButton("End Song");
+        stopButton = new JButton("Stop");
         stopButton.addActionListener(this);
         playButton = new JButton("Play");
         playButton.addActionListener(this);
@@ -179,6 +179,7 @@ public class Controls extends JPanel implements ActionListener
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            // sets the time elapsed label
             while (player.isPlaying())
             {
                 if (toSeconds(player.getPosition()) < 60)

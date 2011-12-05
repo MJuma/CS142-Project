@@ -1,0 +1,34 @@
+     if (e.getSource() == menuHelp_Tutorial) 
+        {
+        	JOptionPane.showMessageDialog(null,
+        			"Adding music:\n\n"+
+"To add music you first go to file and click at ‘Add New’ song this will open\n"+ 
+"a file chooser menu.  From this menu you can browse through the files in your\n"+ 
+"computer and click the song.  The song must be an .mp3 file.\n"+ 
+"To add a playlist you go to file and click ‘Add Playlist’ and a file chooser menu\n"+
+"will open up.  From this menu you can browse through files and add a playlist. The\n"+
+"playlist folder must be an .m3u folder.\n\n"+
+
+"Adding Album Art:\n\n"+
+"To add file artwork you will need to click the edit button on the tool bar and scroll\n"+
+"down to ‘Find Album Artwork’. This will transfer you to Google image which will allow\n"+
+"you to save an image to your computer.  Then a file chooser will open and allow you to\n"+ 
+"choose the image you just saved. The artwork you save will show up every time you click\n"+ 
+"on the song.\n\n"+
+
+"Playing Music:\n\n"+
+"To play music you press the ‘Play’ button or click on the control button on the tool bar\n"+
+"and there is an option to play music from there. There also is a button to ‘Pause’ and the\n"+ "" +
+"temporally pause the track and you can resume the track by pressing the 'Resume'button."
+);
+        }
+        if (e.getSource() == menuHelp_Credits) 
+        {
+            JOptionPane.showMessageDialog(null,"Credits:\nMohammad Juma:"+"    "+"Media Player\nNhat Tran:"+"    "+"	Main Gui\nKhoa Nguyen:"+"    "+"Import Files\n" +
+            		"Luke Dewhirst:"+"    "+"Artwork\nJulian Jones:"+"    "+"ToolBar, Documentation");
+        }
+        if (e.getSource() == menuHelp_About) 
+        {
+            JOptionPane.showMessageDialog(null,"Copyright: 2001");
+        }
+    }

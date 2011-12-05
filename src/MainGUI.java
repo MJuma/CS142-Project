@@ -3,6 +3,7 @@
  */
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -23,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,20 +41,20 @@ public class MainGUI implements ActionListener
 
     /** The frame. */
     private JFrame frame;
-    
+
     /** The playlist table. */
     private JTable mainWindowTable;
-    
+
     /** The menu help_ about. */
     JMenuItem menuFile_AddSong, menuFile_AddPlaylist, menuFile_Exit, menuEdit_FindArtwork, menuControls, menuControls_PlayPause, menuControls_Stop,
-              menuControls_Next, menuControls_Previous, menuHelp_Tutorial, menuHelp_Credits, menuHelp_About;
-    
+    menuControls_Next, menuControls_Previous, menuHelp_Tutorial, menuHelp_Credits, menuHelp_About;
+
     /** The start controls. */
     Controls startControls;
-    
+
     /** The play path. */
     static File playPath;
-    
+
     // Main Windows Arrays
     ArrayList<String> mwtitle = new ArrayList<String>();
     ArrayList<String> mwartist = new ArrayList<String>();
@@ -89,8 +91,9 @@ public class MainGUI implements ActionListener
 
     /**
      * Create the application.
+     * @throws FileNotFoundException 
      */
-    public MainGUI() 
+    public MainGUI() throws FileNotFoundException 
     {
         frame = new JFrame();
         frame.setBounds(100, 10, 1000, 700);
@@ -106,39 +109,20 @@ public class MainGUI implements ActionListener
         menuFile.add(menuFile_AddSong);
         menuFile_AddSong.addActionListener(this);
 
-        menuFile_AddPlaylist = new JMenuItem("Add Playlist");
-        menuFile.add(menuFile_AddPlaylist);
-        menuFile_AddPlaylist.addActionListener(this);
+//        menuFile_AddPlaylist = new JMenuItem("Add Playlist");
+//        menuFile.add(menuFile_AddPlaylist);
+//        menuFile_AddPlaylist.addActionListener(this);
 
         menuFile_Exit = new JMenuItem("Exit");
         menuFile.add(menuFile_Exit);
         menuFile_Exit.addActionListener(this);
 
-        JMenu menuEdit = new JMenu("Edit");
-        menuBar.add(menuEdit);
-
-        menuEdit_FindArtwork = new JMenuItem("Find Album Artwork");
-        menuEdit.add(menuEdit_FindArtwork);
-        menuEdit_FindArtwork.addActionListener(this);
-
-        JMenu menuControls = new JMenu("Controls");
-        menuBar.add(menuControls);
-
-        menuControls_PlayPause = new JMenuItem("Play / Pause");
-        menuControls.add(menuControls_PlayPause);
-        menuControls_PlayPause.addActionListener(this);
-
-        menuControls_Stop = new JMenuItem("Stop");
-        menuControls.add(menuControls_Stop);
-        menuControls_Stop.addActionListener(this);
-
-        menuControls_Next = new JMenuItem("Next Track");
-        menuControls.add(menuControls_Next);
-        menuControls_Next.addActionListener(this);
-
-        menuControls_Previous = new JMenuItem("Previous Track");
-        menuControls.add(menuControls_Previous);
-        menuControls_Previous.addActionListener(this);
+//        JMenu menuEdit = new JMenu("Edit");
+//        menuBar.add(menuEdit);
+//
+//        menuEdit_FindArtwork = new JMenuItem("Find Album Artwork");
+//        menuEdit.add(menuEdit_FindArtwork);
+//        menuEdit_FindArtwork.addActionListener(this);
 
         JMenu menuHelp = new JMenu("Help");
         menuBar.add(menuHelp);
@@ -160,46 +144,39 @@ public class MainGUI implements ActionListener
 
         JScrollPane mainWindowPanel = new JScrollPane();
         mainWindowPanel.setToolTipText("Information");
-
-        JPanel artworkPanel = new JPanel();
-        artworkPanel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         groupLayout.setHorizontalGroup(
-            groupLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addGap(6)
-                    .addComponent(artworkPanel, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-                    .addGap(7)
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
-                        .addComponent(controlsPanel, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
+                        .addComponent(mainWindowPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE)
+                        .addComponent(controlsPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE))
                     .addContainerGap())
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.TRAILING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                        .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
-                            .addPreferredGap(ComponentPlacement.UNRELATED)
-                            .addComponent(controlsPanel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-                            .addGap(7))
-                        .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(artworkPanel, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())))
+                    .addComponent(mainWindowPanel, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addComponent(controlsPanel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+                    .addGap(7))
         );
 
-        JLabel artworkPanel_Title = new JLabel("Art Work");
-        artworkPanel.add(artworkPanel_Title);
+        //        JLabel artworkPanel_Title = new JLabel("Art Work"); //artwork panel displays the selected artwork file
+        //        ArtworkFinder a = new ArtworkFinder();  // calls a new artworkfinder class
+        //        
+        //        ImageIcon art = new ImageIcon(a.getArtwork());  //
+        //        artworkPanel.add(artworkPanel_Title);
 
-        JLabel controlsPanel_Title = new JLabel("Media Player");
+        JLabel controlsPanel_Title = new JLabel("");
         controlsPanel.add(controlsPanel_Title);
         startControls = new Controls();
         controlsPanel.add(startControls);
-        
+
         String[][] str = new String[35][6];
-        
+
         for (int i=0; i<35; i++)
         {
             for (int j=0; j<6; j++)
@@ -207,9 +184,9 @@ public class MainGUI implements ActionListener
                 str[i][j] = "";
             }
         }
-        
+
         String[] names = new String[] {"Name", "Artist", "Album", "Genre", "Length", "Year"};
-        
+
         mainWindowTable = new JTable();
         mainWindowTable.setEnabled(false);
         mainWindowTable.setModel(new DefaultTableModel(str,names )
@@ -247,11 +224,11 @@ public class MainGUI implements ActionListener
         if (e.getSource() == menuFile_AddSong) 
         {
             AddSongs as = new AddSongs();
-            
+
             playPath = as.getFile().get(0);
-            
+
             startControls.setPlayPath(as.getFile());
-            
+
             mwtitle = as.getTitle();
             mwalbum = as.getAlbum();
             mwartist = as.getArtist();
@@ -260,9 +237,9 @@ public class MainGUI implements ActionListener
             mwlength = as.getLength();
             mwpath = as.getPath();
             songsSelected = as.songsSelected();
-                                    
+
             String[][] str2 = new String[35][6];
-            
+
             for (int i=0; i<songsSelected; i++)
             {
                 for (int j=0; j<6; j++)
@@ -276,11 +253,8 @@ public class MainGUI implements ActionListener
                 }
             }
             
-
-
-            
             String[] names2 = new String[] {"Name", "Artist", "Album", "Genre", "Length", "Year"};
-            
+
             mainWindowTable.setModel(new DefaultTableModel(str2,names2)
             {
                 Class[] columnTypes = new Class[] 
@@ -298,50 +272,59 @@ public class MainGUI implements ActionListener
             mainWindowTable.getColumnModel().getColumn(3).setPreferredWidth(50);
             mainWindowTable.getColumnModel().getColumn(4).setPreferredWidth(37);
             mainWindowTable.getColumnModel().getColumn(5).setPreferredWidth(37);
-            
-        }
-        if (e.getSource() == menuFile_AddPlaylist) 
-        {
 
         }
+//        if (e.getSource() == menuFile_AddPlaylist) 
+//        {
+//
+//        }
         if (e.getSource() == menuFile_Exit) 
         {
             System.exit(0);
         }
-        if (e.getSource() == menuEdit_FindArtwork) 
-        {
-
-        }
-        if (e.getSource() == menuControls_PlayPause) 
-        {
-
-        }
-        if (e.getSource() == menuControls_Stop) 
-        {
-
-        }
-        if (e.getSource() == menuControls_Next) 
-        {
-
-        }
-        if (e.getSource() == menuControls_Previous) 
-        {
-
-        }
+//        if (e.getSource() == menuEdit_FindArtwork) 
+//        {
+//            ArtworkFinder art = new ArtworkFinder(mwartist.get(0), mwalbum.get(0));
+//            try {
+//                art.getArtwork();
+//            } catch (FileNotFoundException e1) {
+//                e1.printStackTrace();
+//            }
+//        }
         if (e.getSource() == menuHelp_Tutorial) 
         {
+            JOptionPane.showMessageDialog(null,
+                    "Adding music:\n\n"+
+                            "To add music you first go to file and click at ‘Add New’ song this will open\n"+ 
+                            "a file chooser menu.  From this menu you can browse through the files in your\n"+ 
+                            "computer and click the song.  The song must be an .mp3 file.\n"+ 
+                            "To add a playlist you go to file and click ‘Add Playlist’ and a file chooser menu\n"+
+                            "will open up.  From this menu you can browse through files and add a playlist. The\n"+
+                            "playlist folder must be an .m3u folder.\n\n"+
 
+                            "Adding Album Art:\n\n"+
+                            "To add file artwork you will need to click the edit button on the tool bar and scroll\n"+
+                            "down to ‘Find Album Artwork’. This will transfer you to Google image which will allow\n"+
+                            "you to save an image to your computer.  Then a file chooser will open and allow you to\n"+ 
+                            "choose the image you just saved. The artwork you save will show up every time you click\n"+ 
+                            "on the song.\n\n"+
+
+                            "Playing Music:\n\n"+
+                            "To play music you press the ‘Play’ button or click on the control button on the tool bar\n"+
+                            "and there is an option to play music from there. There also is a button to ‘Pause’ and the\n"+ "" +
+                            "temporally pause the track and you can resume the track by pressing the 'Resume'button."
+                    );
         }
         if (e.getSource() == menuHelp_Credits) 
         {
-            JOptionPane.showMessageDialog(null,"Credits Page");
-        }
+            JOptionPane.showMessageDialog(null,"Credits:\nMohammad Juma:"+"    "+"Media Player\nNhat Tran:"+"    "+"    Main Gui\nKhoa Nguyen:"+"    "+"Import Files\n" +
+                    "Luke Dewhirst:"+"    "+"Song Organization\nJulian Jones:"+"    "+"ToolBar, Documentation" + "\n\nTools Used:\nJAudio Tagger\nJLayer\nGoogle Window Builder Pro");        }
         if (e.getSource() == menuHelp_About) 
         {
-            JOptionPane.showMessageDialog(null,"About Page");
+            JOptionPane.showMessageDialog(null,"About:\n\nVersion 1.0\nCopyright: 2011");
         }
     }
-    
+
     /**
      * Gets the play path.
      *
